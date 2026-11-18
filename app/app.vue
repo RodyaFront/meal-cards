@@ -3,7 +3,13 @@ import { DISH_BUDGET, EXTRAS_RESERVE } from '~/data/budget'
 
 const { today, cards, spent, prices, accept, reroll, undo, setPrice, exportBackup, importBackup } = useMealPlan()
 
-const showPrices = ref(false)
+const view = ref<'today' | 'recipes' | 'prices'>('today')
+
+const titles = {
+  today: 'Что готовим сегодня',
+  recipes: 'Все рецепты',
+  prices: 'Цены на продукты',
+}
 
 const dateLabel = computed(() =>
   new Date(`${today.value}T00:00`).toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' }),
@@ -28,18 +34,22 @@ async function onBackupSelected(event: Event) {
       <header class="flex items-end justify-between gap-4">
         <div>
           <p class="text-sm text-stone-500 first-letter:uppercase">{{ dateLabel }}</p>
-          <h1 class="text-2xl font-semibold">{{ showPrices ? 'Цены на продукты' : 'Что готовим сегодня' }}</h1>
+          <h1 class="text-2xl font-semibold">{{ titles[view] }}</h1>
         </div>
-        <button
-          type="button"
-          class="rounded-xl bg-stone-100 px-3 py-2 text-sm font-medium text-stone-700 active:bg-stone-200"
-          @click="showPrices = !showPrices"
+        <nav
+          class="flex shrink-0 gap-2 text-sm font-medium text-stone-700 *:rounded-xl *:bg-stone-100 *:px-3 *:py-2 *:active:bg-stone-200"
         >
-          {{ showPrices ? 'Готово' : 'Цены' }}
-        </button>
+          <template v-if="view === 'today'">
+            <button type="button" @click="view = 'recipes'">Рецепты</button>
+            <button type="button" @click="view = 'prices'">Цены</button>
+          </template>
+          <button v-else type="button" @click="view = 'today'">Готово</button>
+        </nav>
       </header>
 
-      <template v-if="showPrices">
+      <RecipeList v-if="view === 'recipes'" :prices="prices" />
+
+      <template v-else-if="view === 'prices'">
         <p class="text-sm text-stone-500">
           Впишите цены с чека — стоимость блюд пересчитается сразу. Уже выбранные блюда остаются по цене на
           момент выбора.
