@@ -21,7 +21,7 @@ export const dishes: Dish[] = [
     name: 'Овсянка на молоке с бананом',
     slots: BREAKFAST,
     minutes: 10,
-    ingredients: [['oats', 80], ['milk', 250], ['fruit', 150]],
+    ingredients: [['oats', 80], ['milk', 250], ['banana', 150]],
     steps: [
       'Доведите молоко до кипения.',
       'Всыпьте овсянку, посолите и варите 5–7 минут, помешивая.',
@@ -33,7 +33,7 @@ export const dishes: Dish[] = [
     name: 'Овсянка на воде с яблоком',
     slots: BREAKFAST,
     minutes: 10,
-    ingredients: [['oats', 90], ['fruit', 180]],
+    ingredients: [['oats', 90], ['apple', 180]],
     steps: [
       'Вскипятите 300 мл воды, всыпьте овсянку и щепотку соли.',
       'Варите 5–7 минут, помешивая.',
@@ -81,7 +81,7 @@ export const dishes: Dish[] = [
     name: 'Варёные яйца с хлебом и яблоком',
     slots: BREAKFAST,
     minutes: 12,
-    ingredients: [['egg', 3], ['bread', 2], ['fruit', 180]],
+    ingredients: [['egg', 3], ['bread', 2], ['apple', 180]],
     steps: [
       'Опустите яйца в кипящую воду и варите 8 минут.',
       'Остудите под холодной водой и очистите.',
@@ -141,11 +141,11 @@ export const dishes: Dish[] = [
     name: 'Ленивая овсянка на кефире',
     slots: BREAKFAST,
     minutes: 20,
-    ingredients: [['oats', 70], ['milk', 250], ['fruit', 150]],
+    ingredients: [['oats', 70], ['milk', 250], ['banana', 150]],
     steps: [
       'Залейте овсянку кефиром и перемешайте.',
       'Оставьте на 15 минут или с вечера в холодильнике.',
-      'Добавьте нарезанный банан или яблоко.',
+      'Добавьте нарезанный банан.',
     ],
   },
   {
@@ -165,7 +165,7 @@ export const dishes: Dish[] = [
     name: 'Банановые оладьи с овсянкой',
     slots: BREAKFAST,
     minutes: 15,
-    ingredients: [['fruit', 150], ['egg', 2], ['oats', 40], ['oil', 10]],
+    ingredients: [['banana', 150], ['egg', 2], ['oats', 40], ['oil', 10]],
     steps: [
       'Разомните банан вилкой, смешайте с яйцами и овсянкой.',
       'Выкладывайте тесто ложкой на разогретую с маслом сковороду.',

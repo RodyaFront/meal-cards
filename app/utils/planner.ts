@@ -1,6 +1,6 @@
 import { DISH_BUDGET } from '../data/budget'
 import { dishes, type Dish, type MealSlot } from '../data/dishes'
-import { products } from '../data/products'
+import { products, type ProductId } from '../data/products'
 
 export const SLOTS: MealSlot[] = ['breakfast', 'lunch', 'dinner']
 
@@ -12,10 +12,17 @@ export interface LogEntry {
   cost: number
 }
 
+/** Цены упаковок, заданные пользователем; для остальных продуктов действует стартовая цена */
+export type Prices = Partial<Record<ProductId, number>>
+
 const roundMoney = (value: number) => Math.round(value * 100) / 100
 
-export function dishCost(dish: Dish) {
-  return roundMoney(dish.ingredients.reduce((sum, [id, amount]) => sum + products[id].price * amount, 0))
+export function dishCost(dish: Dish, prices: Prices) {
+  const total = dish.ingredients.reduce((sum, [id, amount]) => {
+    const { price, packSize } = products[id]
+    return sum + ((prices[id] ?? price) / packSize) * amount
+  }, 0)
+  return roundMoney(total)
 }
 
 export function monthSpent(log: LogEntry[], date: string) {
@@ -33,7 +40,9 @@ export function slotCap(log: LogEntry[], date: string) {
   return (DISH_BUDGET - monthSpent(log, date)) / (daysLeft * SLOTS.length - acceptedToday)
 }
 
-export function pickDish(slot: MealSlot, cap: number, exclude: string[]) {
-  const pool = dishes.filter(dish => dish.slots.includes(slot) && dishCost(dish) <= cap && !exclude.includes(dish.id))
+export function pickDish(slot: MealSlot, cap: number, exclude: string[], prices: Prices) {
+  const pool = dishes.filter(
+    dish => dish.slots.includes(slot) && dishCost(dish, prices) <= cap && !exclude.includes(dish.id),
+  )
   return pool[Math.floor(Math.random() * pool.length)]
 }

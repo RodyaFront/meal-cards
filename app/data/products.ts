@@ -1,27 +1,33 @@
 interface Product {
   name: string
+  /** Единица, в которой продукт указан в рецептах */
   unit: string
-  /** Цена за одну единицу `unit`, грн */
+  /** За что указана цена, в винительном падеже: «грн за кг» */
+  pack: string
+  /** Сколько единиц `unit` в одной упаковке */
+  packSize: number
+  /** Стартовая цена упаковки, грн; актуальная задаётся на экране «Цены» */
   price: number
 }
 
 export const products = {
-  buckwheat: { name: 'Гречка', unit: 'г', price: 60 / 1000 },
-  rice: { name: 'Рис', unit: 'г', price: 45 / 1000 },
-  oats: { name: 'Овсянка', unit: 'г', price: 40 / 1000 },
-  pasta: { name: 'Макароны', unit: 'г', price: 35 / 1000 },
-  potato: { name: 'Картошка', unit: 'г', price: 20 / 1000 },
-  egg: { name: 'Яйца', unit: 'шт', price: 45 / 10 },
-  chicken: { name: 'Курица (бёдра, окорочка)', unit: 'г', price: 120 / 1000 },
-  oil: { name: 'Масло подсолнечное', unit: 'мл', price: 50 / 500 },
-  cabbage: { name: 'Капуста', unit: 'г', price: 30 / 1000 },
-  carrot: { name: 'Морковь', unit: 'г', price: 30 / 1000 },
-  onion: { name: 'Лук', unit: 'г', price: 30 / 1000 },
+  buckwheat: { name: 'Гречка', unit: 'г', pack: 'кг', packSize: 1000, price: 60 },
+  rice: { name: 'Рис', unit: 'г', pack: 'кг', packSize: 1000, price: 45 },
+  oats: { name: 'Овсянка', unit: 'г', pack: 'кг', packSize: 1000, price: 40 },
+  pasta: { name: 'Макароны', unit: 'г', pack: 'кг', packSize: 1000, price: 35 },
+  potato: { name: 'Картошка', unit: 'г', pack: 'кг', packSize: 1000, price: 20 },
+  egg: { name: 'Яйца', unit: 'шт', pack: 'десяток', packSize: 10, price: 45 },
+  chicken: { name: 'Курица (бёдра, окорочка)', unit: 'г', pack: 'кг', packSize: 1000, price: 120 },
+  oil: { name: 'Масло подсолнечное', unit: 'мл', pack: 'бутылку 0,5 л', packSize: 500, price: 50 },
+  cabbage: { name: 'Капуста', unit: 'г', pack: 'кг', packSize: 1000, price: 100 },
+  carrot: { name: 'Морковь', unit: 'г', pack: 'кг', packSize: 1000, price: 30 },
+  onion: { name: 'Лук', unit: 'г', pack: 'кг', packSize: 1000, price: 30 },
   // Вес буханки в исходной таблице не указан: считаем 16 ломтиков на буханку.
-  bread: { name: 'Хлеб', unit: 'ломт.', price: 20 / 16 },
-  milk: { name: 'Молоко или кефир', unit: 'мл', price: 50 / 1000 },
-  fish: { name: 'Рыбные консервы', unit: 'бан.', price: 55 },
-  fruit: { name: 'Банан или яблоко', unit: 'г', price: 50 / 1000 },
+  bread: { name: 'Хлеб', unit: 'ломт.', pack: 'буханку', packSize: 16, price: 20 },
+  milk: { name: 'Молоко или кефир', unit: 'мл', pack: 'л', packSize: 1000, price: 50 },
+  fish: { name: 'Рыбные консервы', unit: 'бан.', pack: 'банку', packSize: 1, price: 55 },
+  banana: { name: 'Бананы', unit: 'г', pack: 'кг', packSize: 1000, price: 50 },
+  apple: { name: 'Яблоки', unit: 'г', pack: 'кг', packSize: 1000, price: 50 },
 } satisfies Record<string, Product>
 
 export type ProductId = keyof typeof products
